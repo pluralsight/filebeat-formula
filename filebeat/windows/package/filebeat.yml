@@ -1,0 +1,18 @@
+{%- set esng = salt['pillar.get']('elasticsearch-ng', {}) %}
+filebeat:
+  config_dir: 'd:\apps\filebeat\conf.d'
+
+output.elasticsearch:
+  hosts: ['{{ esng.hosts }}']
+  username: '{{ esng.username }}'
+  password: '{{ esng.password }}'
+  index: '%{[fields.index]}'
+
+processors:
+- drop_fields:
+    fields: ['offset', 'beat.name', 'beat.version']
+
+logging.to_files: true
+logging.files:
+  path: 'd:\data\logs\filebeat'
+  name: 'filebeat.log'

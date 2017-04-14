@@ -1,0 +1,11 @@
+{
+  "description" : "Grok parser for log4net messages",
+  "processors": [
+    {
+      "grok": {
+        "field": "message",
+        "patterns": ["\[%{TIMESTAMP_ISO8601:sourceTimestamp},%{NUMBER:millis}\]%{SPACE}\[%{LOGLEVEL:loglevel}\]%{SPACE}\[%{NOTSPACE:logger}\]%{SPACE}\[%{DATA:appName}\]%{SPACE}%{GREEDYDATA:message}"]
+      }
+    }
+  ]
+}
