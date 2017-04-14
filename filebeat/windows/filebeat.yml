@@ -3,7 +3,7 @@ filebeat:
   config_dir: 'd:\apps\filebeat\conf.d'
 
 output.elasticsearch:
-  hosts: ['"{{ esng.hosts }}"']
+  hosts: ['{{ esng.hosts }}']
   username: '{{ esng.username }}'
   password: '{{ esng.password }}'
   index: '%{[fields.index]}'
