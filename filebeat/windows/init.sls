@@ -29,6 +29,7 @@ copy-config:
   file.managed:
     - name: {{ appdir }}\filebeat.yml
     - source: salt://filebeat/windows/filebeat.yml
+    - template: jinja
     - require:
       - cmd: install-service
 
