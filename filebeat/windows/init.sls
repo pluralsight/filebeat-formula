@@ -22,3 +22,5 @@ install-service:
   cmd.run:
     - shell: powershell
     - name: 'cd {{ appdir }} ; ./install-service-filebeat.ps1'
+    - require:
+      - file: copy-package
