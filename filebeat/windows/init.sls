@@ -1,4 +1,4 @@
-{%- set appdir = d:\apps\filebeat %}
+{%- set appdir = 'd:\apps\filebeat' %}
 log-directory:
   file.directory:
     - name: d:\data\logs\filebeat
