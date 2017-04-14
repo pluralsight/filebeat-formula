@@ -1,7 +1,7 @@
 {%- set appdir = 'd:\\apps\\filebeat' %}
 log-directory:
   file.directory:
-    - name: d:\\data\\logs\\filebeat
+    - name: d:\data\logs\filebeat
     - makedirs: true
 
 data-directory:
@@ -24,3 +24,15 @@ install-service:
     - name: 'cd {{ appdir }} ; ./install-service-filebeat.ps1'
     - require:
       - file: copy-package
+
+copy-config:
+  file.managed:
+    - name: {{ appdir }}\filebeat.yml
+    - require:
+      - cmd: install-service
+
+start-service:
+  service.running:
+    - name: filebeat
+    - require:
+      - file: copy-config
