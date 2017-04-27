@@ -1,40 +1,47 @@
 {%- set appdir = 'd:\\apps\\filebeat' %}
-log-directory:
+filebeat-log-directory:
   file.directory:
     - name: d:\data\logs\filebeat
     - makedirs: true
 
-data-directory:
+filebeat-data-directory:
   file.directory:
     - name: {{ appdir }}\data
     - makedirs: true
     - require:
-      - file: log-directory
+      - file: filebeat-log-directory
 
-copy-package:
+filebeat-config-directory:
+  file.directory:
+    - name: {{ appdir }}\conf.d
+    - makedirs: true
+    - require:
+      - file: filebeat-data-directory
+
+filebeat-copy-package:
   file.recurse:
     - name: {{ appdir }}
     - source: salt://filebeat/windows/package
     - require:
-      - file: data-directory
+      - file: filebeat-config-directory
 
-install-service:
+filebeat-install-service:
   cmd.run:
     - shell: powershell
     - name: 'cd {{ appdir }} ; ./install-service-filebeat.ps1'
     - require:
-      - file: copy-package
+      - file: filebeat-copy-package
 
-copy-config:
+filebeat-copy-config:
   file.managed:
     - name: {{ appdir }}\filebeat.yml
     - source: salt://filebeat/windows/filebeat.yml
     - template: jinja
     - require:
-      - cmd: install-service
+      - cmd: filebeat-install-service
 
-start-service:
+filebeat-start-service:
   service.running:
     - name: filebeat
     - require:
-      - file: copy-config
+      - file: filebeat-copy-config
