@@ -39,9 +39,3 @@ filebeat-copy-config:
     - template: jinja
     - require:
       - cmd: filebeat-install-service
-
-filebeat-start-service:
-  service.running:
-    - name: filebeat
-    - require:
-      - file: filebeat-copy-config
