@@ -25,17 +25,17 @@ filebeat-copy-package:
     - require:
       - file: filebeat-config-directory
 
-filebeat-install-service:
-  cmd.run:
-    - shell: powershell
-    - name: 'cd {{ appdir }} ; ./install-service-filebeat.ps1'
-    - require:
-      - file: filebeat-copy-package
-
 filebeat-copy-config:
   file.managed:
     - name: {{ appdir }}\filebeat.yml
     - source: salt://filebeat/windows/filebeat.yml
     - template: jinja
     - require:
-      - cmd: filebeat-install-service
+      - cmd: filebeat-copy-package
+
+filebeat-install-service:
+  cmd.run:
+    - shell: powershell
+    - name: 'cd {{ appdir }} ; ./install-service-filebeat.ps1'
+    - require:
+      - file: filebeat-copy-config
