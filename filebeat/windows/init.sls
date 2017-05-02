@@ -31,7 +31,7 @@ filebeat-copy-config:
     - source: salt://filebeat/windows/filebeat.yml
     - template: jinja
     - require:
-      - cmd: filebeat-copy-package
+      - file: filebeat-copy-package
 
 filebeat-install-service:
   cmd.run:
