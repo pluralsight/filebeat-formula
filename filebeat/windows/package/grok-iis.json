@@ -4,7 +4,7 @@
     {
       "grok": {
         "field": "message",
-        "patterns": ["%{TIMESTAMP_ISO8601:source_timestamp} %{IP:ip_address} %{WORD:method} %{URIPATH:uri} %{NOTSPACE:querystring} %{NUMBER:port} %{NOTSPACE:username} %{IP:client_ip} %{NOTSPACE:agent} %{NOTSPACE:referrer} %{NUMBER:status} %{NUMBER:sub_status} %{NUMBER:sc_status} %{NUMBER:time_taken}"]
+        "patterns": ["%{TIMESTAMP_ISO8601:log_timestamp} %{WORD:iis_site} %{IP:site} %{WORD:method} %{URIPATH:uri} %{NOTSPACE:querystring} %{NUMBER:port} %{NOTSPACE:username} %{IP:clientip} %{NOTSPACE:agent} %{NOTSPACE:referrer} %{NUMBER:status} %{NUMBER:substatus} %{NUMBER:scstatus} %{NUMBER:timetaken}"]
       }
     }
   ]
