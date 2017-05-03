@@ -9,15 +9,14 @@ output.elasticsearch:
   index: '%{[fields.index]}'
 
 processors:
-  - drop_fields:
+- drop_fields:
     fields: ['offset', 'beat.name', 'beat.version']
-  - drop_event:
+- drop_event:
     when:
-      or:
-        - regexp:
-          message: '^#'
-        - contains:
-          message: 'ELB-HealthChecker/2.0'
+      regexp:
+        message: '^#'
+      contains:
+        message: 'ELB-HealthChecker/2.0'
 
 logging.to_files: true
 logging.files:
