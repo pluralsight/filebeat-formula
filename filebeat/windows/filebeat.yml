@@ -15,6 +15,8 @@ processors:
     when:
       regexp:
         message: '^#'
+- drop_event:
+    when:
       contains:
         message: 'ELB-HealthChecker/2.0'
 
