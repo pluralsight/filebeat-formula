@@ -34,8 +34,10 @@ filebeat-copy-config:
       - file: filebeat-copy-package
 
 filebeat-install-service:
-  cmd.run:
+  cmd.script:
+    - name: install-service-filebeat.ps1
+    - source: salt://filebeat/windows/package/install-service-filebeat.ps1
     - shell: powershell
-    - name: 'cd {{ appdir }} ; ./install-service-filebeat.ps1'
+    - args: '-installDir {{ appdir }}'
     - require:
       - file: filebeat-copy-config
