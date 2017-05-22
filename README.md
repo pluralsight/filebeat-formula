@@ -15,7 +15,7 @@ Installs the filebeat package.
 
 ## filebeat.config
 
-configures filebeat, and installs rc levels for startup on reboot.
+Configures filebeat. Since filebeat config files are YAML, the filebeat pillar _is_ the config.
 
 ### Usage
 
@@ -36,7 +36,7 @@ filebeat:
 
 ## filebeat.service
 
-Starts the filebeat service. 
+Starts the filebeat service.
 
 **Due to filebeat requiring tty to start, this state uses a SSH loopback to achieve this. (use_vt / sudoers !requiretty did not resolve this on 2015.8.x...)**
 
