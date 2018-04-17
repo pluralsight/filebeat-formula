@@ -1,3 +1,5 @@
+#!jinja|yaml|gpg
+
 filebeat:
   filebeat.prospectors:
     - input_type: log
@@ -8,10 +10,25 @@ filebeat:
       paths:
         - /var/log/content-tools/*.log
   fields:
-    env: staging
+    env: {{ grains['env'] }}
     server_role: content-tools-api
-  output.logstash:
+  output.elasticsearch:
     hosts:
-      - '10.107.229.73:5043'
-      - '10.107.217.26:5043'
-    index: content-staging-
+      - http://elasticsearch-ng-data-1.vnerd.com:9200
+      - http://elasticsearch-ng-data-2.vnerd.com:9200
+      - http://elasticsearch-ng-data-3.vnerd.com:9200
+    index: content-{{ grains['env'] }}-
+    username: logstash_internal
+    password: |
+      -----BEGIN PGP MESSAGE-----
+
+      hQEMA/heVHNYVt+cAQf9E8tJegL6uuLYed/4Vy1ykhqoD1sDJBDTOnT7KpAn97Se
+      Ivk8iHnj5ut+ImaTYFVcemao1SIgqk8GgKqXU9COeG0tz/bLlRGxcSWUMkS9aE1O
+      Oj4Nhp9qDmbFSWXDYedmObR7gGWY08MikDhnanFTi6Ps6cT4bcZiZRrMzUcMhhND
+      t+KG9reLA8vFpm8WUqub89yTiBrsmq31Ebn4KHwAPxbgc9FeDhv8gBHgS1Z6DyV0
+      jfwK0H2HhVs3phu+ctBCVzMSwvaemSsW8n7qzDKqfKLf7ZEWd5LntJbFVuLHooKu
+      p+A1GnMubjkGGnqb5lHgT0aqm70UC8W60tpSN7ivLtJJATgFEji3IRCFE5jfmbZd
+      bX490Y4ifJH6dr1utWoZhQcJq1MouMYsVrKB6KzXG63X2zZTmElxwa19yWUYFWoN
+      i2HoWAPNWzVDBg==
+      =onvb
+      -----END PGP MESSAGE-----
