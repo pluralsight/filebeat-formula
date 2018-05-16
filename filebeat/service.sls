@@ -3,3 +3,5 @@ filebeat-service:
     - name: filebeat
     - require:
       - pkg: filebeat
+    - watch:
+      - file: filebeat-config
