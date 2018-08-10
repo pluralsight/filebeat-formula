@@ -7,6 +7,10 @@ def run():
         env = __grains__['env']
         filebeat_config['fields']['env'] = env
         filebeat_config['output.elasticsearch']['index'] += '-' + env
+        filebeat_config['setup.template'] = {
+            'pattern': filebeat_config['output.elasticsearch']['index'] + '-*',
+            'name': filebeat_config['output.elasticsearch']['index']
+        }
 
         return {
             'filebeat-config': {
