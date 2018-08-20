@@ -9,3 +9,4 @@ include:
 {%- else %}
   - filebeat.config.config-from-file
 {%- endif %}
+  - filebeat.config.config-inputs-from-pillar
