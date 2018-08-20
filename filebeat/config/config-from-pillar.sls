@@ -5,12 +5,10 @@ def run():
 
     if filebeat_config:
         env = __grains__['env']
-        filebeat_config['fields']['env'] = env
-        filebeat_config['output.elasticsearch']['index'] += '-' + env
-        filebeat_config['setup.template'] = {
-            'pattern': 'filebeat-%{[beat.version]}',
-            'name': filebeat_config['output.elasticsearch']['index']
-        }
+        index = filebeat_config['output.elasticsearch'].get('index')
+
+        if index and index != '%{[fields.index]}' and env not in index:
+            filebeat_config['output.elasticsearch']['index'] += '-' + env
 
         return {
             'filebeat-config': {
