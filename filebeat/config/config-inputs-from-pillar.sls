@@ -6,9 +6,8 @@ def run():
     config= {}
 
     for k,v in filebeat_inputs.items():
+        v['index'] += '-' + env
         config['filebeat-input-' + k] = {
-            v['index'] += '-' + env
-
             'file.serialize': [
                 {'name': '/etc/filebeat/conf.d/' + k + '.yml'},
                 {'mode': '644'},
