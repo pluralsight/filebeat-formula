@@ -1,7 +1,7 @@
 #!py
 
 def run():
-    filebeat_inputs = __pillar__.get('filebeat-inputs')
+    filebeat_inputs = __pillar__.get('filebeat-inputs', [])
     env = __grains__['env']
     config= {}
 
