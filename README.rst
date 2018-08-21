@@ -79,6 +79,40 @@ https://www.elastic.co/guide/en/beats/filebeat/6.x/filebeat-configuration.html
 
 See pillar.example for example configuration.
 
+**Index name helping**
+
+This state is built with the grumpybear cluster in mind. Indices there follow a
+pattern of ``<bounded context>-<env>``. For example, ``lumber-staging``,
+``lumber-production``. Some teams used to handle this by injecting the ``env``
+grain into their pillars:
+
+.. code-block:: yaml
+
+  index: lumber-{{ grains['env'] }}
+
+But, adding the jinja renderer to the pillar makes it more cumbersome. So, this
+``config`` state will helpfully attach the ``env`` grain to your index if it is
+not there. It will also leave the field unmodified if it is this special
+substitution string ``%{[fields.index]}``.
+
+**Some changes from 5.* to 6.\***
+
+- ``filebeat.inputs`` instead of ``filebeat.prospectors`` now.
+- ``type`` instead of ``input_type``.
+- Filebeat *requires* definition of ``setup.template`` if using a non-default
+  index.
+
+.. code-block:: yaml
+
+  setup.template:
+    pattern: filebeat-%{[beat.version]}
+    name: lumber-staging
+
+The ``config`` state will try to provision for you upon applying the state for
+provisioning ``/etc/filebeat/filebeat.yml`` *from a pillar*. If you're
+provisioning from a file, you'll need to make sure to include these newly
+required configuration directives.
+
 filebeat.service
 ----------------
 
