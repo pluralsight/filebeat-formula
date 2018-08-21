@@ -1,23 +1,19 @@
-#!jinja|yaml|gpg
+#!yaml|gpg
 
 filebeat:
   filebeat.prospectors:
     - input_type: log
-      multiline:
-        pattern: '^([[:space:]]|#|Stack trace:|Next exception)'
-        negate: false
-        match: after
       paths:
         - /var/log/content-tools/*.log
+      pipeline: content-json
   fields:
-    env: {{ grains['env'] }}
     server_role: content-tools-api
   output.elasticsearch:
     hosts:
       - http://elasticsearch-ng-data-1.vnerd.com:9200
       - http://elasticsearch-ng-data-2.vnerd.com:9200
       - http://elasticsearch-ng-data-3.vnerd.com:9200
-    index: content-{{ grains['env'] }}-
+    index: content
     username: logstash_internal
     password: |
       -----BEGIN PGP MESSAGE-----
