@@ -53,7 +53,7 @@ To provision that output configuration by pillar, simply use the above method
 with the ``filebeat`` pillar without the input configurations.
 
 To provision by file, make sure there is no ``filebeat`` pillar item registered
-to your minion. By default, `salt://filebeat/linux/filebeat.yml` will be dropped
+to your minion. By default, ``salt://filebeat/linux/filebeat.yml`` will be dropped
 on the server. If you want to supply your own file or template, use the
 ``filebeat_source`` pillar:
 
