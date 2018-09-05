@@ -35,7 +35,7 @@ configuration in the ``filebeat`` pillar:
     filebeat.inputs:
       - type: log
         paths: ["/var/log/lumber/error.log"]
-    output.elasticsearch
+    output.elasticsearch:
       hosts:
         - http://elasticsearch-ng-data-1.vnerd.com:9200
         - http://elasticsearch-ng-data-2.vnerd.com:9200
@@ -52,10 +52,10 @@ and input configuration in ``/etc/filebeat/conf.d/*.yml``. You can provision
 To provision that output configuration by pillar, simply use the above method
 with the ``filebeat`` pillar without the input configurations.
 
-To provision by file, make sure there is no ``filebeat`` pillar item registered
-to your minion. By default, ``salt://filebeat/linux/filebeat.yml`` will be dropped
-on the server. If you want to supply your own file or template, use the
-``filebeat_source`` pillar:
+To provision that output configuration by file, make sure there is no
+``filebeat`` pillar item registered to your minion. By default,
+``salt://filebeat/linux/filebeat.yml`` will be dropped on the server. If you
+want to supply your own file or template, use the ``filebeat_source`` pillar:
 
 .. code-block:: yaml
 
@@ -72,7 +72,7 @@ Input configurations can be provisioned by pillar by defining
         - type: log
           paths: ["/var/log/lumber/error.log"]
 
-Or, this input configuration can be provisioned outside of slack (eg. part of a
+Or, this input configuration can be provisioned outside of salt (eg. part of a
 deploy).
 
 https://www.elastic.co/guide/en/beats/filebeat/6.x/filebeat-configuration.html
@@ -108,9 +108,9 @@ substitution string ``%{[fields.index]}``.
     pattern: filebeat-%{[beat.version]}
     name: lumber-staging
 
-The ``config`` state will try to provision for you upon applying the state for
-provisioning ``/etc/filebeat/filebeat.yml`` *from a pillar*. If you're
-provisioning from a file, you'll need to make sure to include these newly
+The ``config`` state will try to provision the template pattern for you upon
+applying the state for ``/etc/filebeat/filebeat.yml`` *from a pillar*. If you
+are provisioning from a file, you'll need to make sure to include these newly
 required configuration directives.
 
 filebeat.service
