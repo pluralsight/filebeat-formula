@@ -10,7 +10,7 @@ def run():
         if index and index != '%{[fields.index]}' and env not in index:
             filebeat_config['output.elasticsearch']['index'] += '-' + env
 
-        if not filebeat_config.has_key('setup.template'):
+        if not 'setup.template' in filebeat_config:
             filebeat_config['setup.template'] = {
                 'pattern': 'filebeat-%{[beat.version]}',
                 'name': filebeat_config['output.elasticsearch']['index']
